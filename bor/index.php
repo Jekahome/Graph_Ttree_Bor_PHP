@@ -2,11 +2,11 @@
 
 // Trie (prefix tree)
 /*
-    Бор
-    Бор, также именуемый «префиксное дерево» — это древовидная структура данных,
-    которая особенно эффективна при решении задач на строки.
-    Она обеспечивает быстрое извлечение данных и чаще всего применяется для поиска слов в словаре,
-    автозавершений в поисковике и даже для IP-маршрутизации.
+Бор
+Бор, также именуемый «префиксное дерево» — это древовидная структура данных,
+которая особенно эффективна при решении задач на строки.
+Она обеспечивает быстрое извлечение данных и чаще всего применяется для поиска слов в словаре,
+автозавершений в поисковике и даже для IP-маршрутизации.
 
 Вопросы о борах, часто задаваемые на собеседованиях:
 Подсчитайте общее количество слов, сохраненных в бору
@@ -14,7 +14,6 @@
 Отсортируйте элементы массива при помощи бора
 Постройте слова из словаря, воспользовавшись бором
 Создайте словарь T9
-
  */
 declare(strict_types=1);
 
@@ -46,7 +45,6 @@ class Node {
             }
         }
         if(is_null($currentNode)){
-
             $isDubl = false;
             if(count($liters)==0){
                 foreach ($this->nodes as $m){
@@ -65,7 +63,6 @@ class Node {
         }else{
             $currentNode->adds($liters);
         }
-
     }
 
     public function getTree(string $stork=""):array {
@@ -85,7 +82,6 @@ class Node {
     }
 
     public function getAutocompletion(array $liters):array {
-
         if(empty($liters)){
             if($this->end){
                 return [$this->litera];
@@ -119,13 +115,10 @@ class Node {
     }
 
     public function deleteTree(array $liters){
-
-           // if($this->end)return false;
-
             $firstLitera = array_shift($liters);
             for ($i=0;$i<count($this->nodes) ;$i++){
                 if($this->nodes[$i]->litera == $firstLitera){
-                   if(empty($liters) && $this->nodes[$i]->end  /*$node->deleteTree($liters)*/){
+                   if(empty($liters) && $this->nodes[$i]->end ){
                         unset($this->nodes[$i]);
 
                       if(empty($this->nodes)) {
@@ -139,20 +132,17 @@ class Node {
                            $this->end = true;
                        }
                    }
-
                 }
             }
     }
 
     public function getLevel(int $level,int $currentLevel,string $NodeLitera=""):?array {
         if($level==$currentLevel){
-
             if($NodeLitera=="" || $NodeLitera==$this->litera){
                 return $this->nodes;
             }else{
                 return [];
             }
-
         }else{
             $buff=[];
             foreach ($this->nodes as $node){
@@ -178,7 +168,6 @@ class Node {
        }
        return $buff;
     }
-
 }
 
 class Trie {
@@ -191,9 +180,7 @@ class Trie {
     public function add(string $word){
         $liters = str_split($word,1);
         $firstLitera = array_shift($liters);
-
         $currentNode=null;
-
         foreach ($this->root as &$node){
             if($node->start == true && $node->end == false && $node->litera == $firstLitera){
                 $currentNode = &$node;
@@ -223,7 +210,6 @@ class Trie {
     public function autocompletion(string $word):array {
         $liters = str_split($word,1);
         $firstLitera = array_shift($liters);
-
         $searchNode = null;
         foreach ($this->root as $node){
             if($node->start == true && $node->litera == $firstLitera){
